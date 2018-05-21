@@ -580,7 +580,9 @@ function keys<T>(o: T): Array<keyof T> {
         for (const action in actions) {
             const boostValue = actions[action];
             const amount = Math.ceil(10 / boostValue);
-            creep.transfer(lab, resourceType, amount);
+            if (lab !== null) {
+                creep.transfer(lab, resourceType, amount);
+            }
         }
     }
 }
