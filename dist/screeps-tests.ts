@@ -24,6 +24,13 @@ interface CreepMemory {
     lastHits: number;
 }
 
+// We can't use 'for in' with StoreDefinition because that would infer string as the type of a key.
+// This helper function allows an iteration with correctly typed keys,
+// See discussion (https://github.com/Microsoft/TypeScript/pull/12253) why Object.keys does not return typed keys.
+function keys<T>(o: T): Array<keyof T> {
+    return Object.keys(o) as Array<keyof T>;
+}
+
 // Game.creeps
 
 {
@@ -552,5 +559,14 @@ interface CreepMemory {
     if (Game.cpu.hasOwnProperty('getHeapStatistics')) {
         const heap = Game.cpu.getHeapStatistics!();
         heap.total_heap_size;
+    }
+}
+
+// StoreDefinition
+
+{
+    for (const resourceType of keys(creep.carry)) {
+        const amount = creep.carry[resourceType];
+        creep.drop(resourceType, amount);
     }
 }
