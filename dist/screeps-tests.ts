@@ -610,3 +610,12 @@ function keys<T>(o: T): Array<keyof T> {
         }
     }
 }
+
+// StoreDefinition
+
+{
+    for (const resourceType of keys(creep.carry)) {
+        const amount = creep.carry[resourceType];
+        creep.drop(resourceType, amount);
+    }
+}
