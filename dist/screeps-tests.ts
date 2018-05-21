@@ -24,8 +24,10 @@ interface CreepMemory {
     lastHits: number;
 }
 
-// We can't use 'for in' with StoreDefinition because that would infer string as the type of a key.
-// This helper function allows an iteration with correctly typed keys,
+// Typescript always uses 'string' as the type of a key inside 'for in' loops.
+// In case of objects with a restricted set of properties (e.g. ResourceConstant as key in StoreDefinition)
+// the type of the key should be narrowed down in order to prevent casting (key as ResourceConstant).
+// This helper function provides strongly typed keys for such objects.
 // See discussion (https://github.com/Microsoft/TypeScript/pull/12253) why Object.keys does not return typed keys.
 function keys<T>(o: T): Array<keyof T> {
     return Object.keys(o) as Array<keyof T>;
