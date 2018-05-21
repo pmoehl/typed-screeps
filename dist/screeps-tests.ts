@@ -102,7 +102,7 @@ function keys<T>(o: T): Array<keyof T> {
 // Game.getObjectById(id)
 
 {
-    creep.memory.sourceId = creep.pos.findClosestByRange(FIND_SOURCES).id;
+    creep.memory.sourceId = creep.pos.findClosestByRange(FIND_SOURCES)!.id;
     const source = Game.getObjectById<Source>(creep.memory.sourceId);
 }
 
@@ -144,7 +144,9 @@ function keys<T>(o: T): Array<keyof T> {
         const exitDir = Game.map.findExit(creep.room, anotherRoomName);
         if (exitDir !== ERR_NO_PATH && exitDir !== ERR_INVALID_ARGS) {
             const exit = creep.pos.findClosestByRange(exitDir);
-            creep.moveTo(exit);
+            if (exit !== null) {
+                creep.moveTo(exit);
+            }
         }
     } else {
         // go to some place in another room
@@ -162,7 +164,9 @@ function keys<T>(o: T): Array<keyof T> {
 
     if (route !== ERR_NO_PATH && route.length > 0) {
         const exit = creep.pos.findClosestByRange(route[0].exit);
-        creep.moveTo(exit);
+        if (exit !== null) {
+            creep.moveTo(exit);
+        }
     }
 }
 
@@ -460,24 +464,27 @@ function keys<T>(o: T): Array<keyof T> {
 {
     // Should have type Creep
     const hostileCreep = creep.pos.findClosestByRange(FIND_HOSTILE_CREEPS);
-
-    creep.say(hostileCreep.name);
+    if (hostileCreep !== null) {
+        creep.say(hostileCreep.name);
+    }
 
     const tower = creep.pos.findClosestByPath<StructureTower>(FIND_HOSTILE_STRUCTURES, {
         filter: (structure) => {
             return structure.structureType === STRUCTURE_TOWER;
         }
     });
-
-    tower.attack(creep);
+    if (tower !== null) {
+        tower.attack(creep);
+    }
 
     const rampart = creep.pos.findClosestByRange<StructureRampart>(FIND_HOSTILE_STRUCTURES, {
         filter: (structure) => {
             return structure.structureType === STRUCTURE_RAMPART;
         }
     });
-
-    rampart.isPublic;
+    if (rampart !== null) {
+        rampart.isPublic;
+    }
 
     // Should have type Creep[]
     const hostileCreeps = creep.pos.findInRange(FIND_HOSTILE_CREEPS, 10);
