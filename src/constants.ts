@@ -494,6 +494,7 @@ declare const REACTIONS: {
 declare const BOOSTS: {
   [part: string]: {[boost: string]: {[action: string]: number}}
   work: {
+      [boost: string]: {[action: string]: number}
       UO: {
           harvest: 3
       },
@@ -535,6 +536,7 @@ declare const BOOSTS: {
       }
   },
   attack: {
+      [boost: string]: {[action: string]: number}
       UH: {
           attack: 2
       },
@@ -546,6 +548,7 @@ declare const BOOSTS: {
       }
   },
   ranged_attack: {
+      [boost: string]: {[action: string]: number}
       KO: {
           rangedAttack: 2,
           rangedMassAttack: 2
@@ -560,6 +563,7 @@ declare const BOOSTS: {
       }
   },
   heal: {
+      [boost: string]: {[action: string]: number}
       LO: {
           heal: 2,
           rangedHeal: 2
@@ -574,6 +578,7 @@ declare const BOOSTS: {
       }
   },
   carry: {
+      [boost: string]: {[action: string]: number}
       KH: {
           capacity: 2
       },
@@ -585,6 +590,7 @@ declare const BOOSTS: {
       }
   },
   move: {
+      [boost: string]: {[action: string]: number}
       ZO: {
           fatigue: 2
       },
@@ -596,6 +602,7 @@ declare const BOOSTS: {
       }
   },
   tough: {
+      [boost: string]: {[action: string]: number}
       GO: {
           damage: .7
       },

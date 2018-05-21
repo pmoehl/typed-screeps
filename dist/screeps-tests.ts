@@ -532,7 +532,18 @@ interface CreepMemory {
 
     REACTIONS[Object.keys(creep.carry)[0]];
 
-    BOOSTS[creep.body[0].type];
+    // Test signature of BOOSTS
+    const lab = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: (s) => s.structureType === STRUCTURE_LAB});
+    const resources = BOOSTS[creep.body[0].type];
+    for (const resourceKey in resources) {
+        const resourceType = resourceKey as ResourceConstant;
+        const actions = resources[resourceType];
+        for (const action in actions) {
+            const boostValue = actions[action];
+            const amount = Math.ceil(10 / boostValue);
+            creep.transfer(lab, resourceType, amount);
+        }
+    }
 }
 
 {
