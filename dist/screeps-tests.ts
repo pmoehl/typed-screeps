@@ -24,6 +24,13 @@ interface CreepMemory {
     lastHits: number;
 }
 
+// We can't use 'for in' with StoreDefinition because that would infer string as the type of a key.
+// This helper function allows an iteration with correctly typed keys,
+// See discussion (https://github.com/Microsoft/TypeScript/pull/12253) why Object.keys does not return typed keys.
+function keys<T>(o: T): Array<keyof T> {
+    return Object.keys(o) as Array<keyof T>;
+}
+
 // Game.creeps
 
 {
@@ -121,6 +128,13 @@ interface CreepMemory {
 
 {
     const exits = Game.map.describeExits("W8N3");
+    keys(exits)
+        .map((exitKey) => {
+            const nextRoom = exits[exitKey];
+            const exitDir = +exitKey as ExitConstant;
+            const exitPos = creep.pos.findClosestByRange(exitDir);
+            return {nextRoom, exitPos};
+        });
 }
 
 // Game.map.findExit()
@@ -128,8 +142,10 @@ interface CreepMemory {
 {
     if (creep.room !== anotherRoomName) {
         const exitDir = Game.map.findExit(creep.room, anotherRoomName);
-        const exit = creep.pos.findClosestByRange(exitDir as FindConstant);
-        creep.moveTo(exit);
+        if (exitDir !== ERR_NO_PATH && exitDir !== ERR_INVALID_ARGS) {
+            const exit = creep.pos.findClosestByRange(exitDir);
+            creep.moveTo(exit);
+        }
     } else {
         // go to some place in another room
     }
