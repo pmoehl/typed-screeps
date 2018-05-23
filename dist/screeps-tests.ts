@@ -534,6 +534,15 @@ function keys<T>(o: T): Array<keyof T> {
     creeps[0].creep.move(TOP);
 }
 
+// StoreDefinition
+
+{
+    for (const resourceType of keys(creep.carry)) {
+        const amount = creep.carry[resourceType];
+        creep.drop(resourceType, amount);
+    }
+}
+
 // Advanced Structure types
 {
     const owned = Game.getObjectById<AnyOwnedStructure>("blah");
@@ -623,6 +632,19 @@ function keys<T>(o: T): Array<keyof T> {
     });
 }
 
+// ConstructionSite
+
+{
+    room.createConstructionSite(10, 10, STRUCTURE_EXTENSION);
+    room.createConstructionSite(10, 11, STRUCTURE_SPAWN, "mySpawn");
+
+    const pos = new RoomPosition(10, 10, room.name);
+    room.createConstructionSite(pos, STRUCTURE_EXTENSION);
+    room.createConstructionSite(pos, STRUCTURE_SPAWN, "mySpawn");
+    pos.createConstructionSite(STRUCTURE_EXTENSION);
+    pos.createConstructionSite(STRUCTURE_SPAWN, "mySpawn");
+}
+
 // StructureLab
 
 {
@@ -635,26 +657,4 @@ function keys<T>(o: T): Array<keyof T> {
             lab0.runReaction(lab1, lab2);
         }
     }
-}
-
-// StoreDefinition
-
-{
-    for (const resourceType of keys(creep.carry)) {
-        const amount = creep.carry[resourceType];
-        creep.drop(resourceType, amount);
-    }
-}
-
-// ConstructionSite
-
-{
-    room.createConstructionSite(10, 10, STRUCTURE_EXTENSION);
-    room.createConstructionSite(10, 11, STRUCTURE_SPAWN, "mySpawn");
-
-    const pos = new RoomPosition(10, 10, room.name);
-    room.createConstructionSite(pos, STRUCTURE_EXTENSION);
-    room.createConstructionSite(pos, STRUCTURE_SPAWN, "mySpawn");
-    pos.createConstructionSite(STRUCTURE_EXTENSION);
-    pos.createConstructionSite(STRUCTURE_SPAWN, "mySpawn");
 }
