@@ -60,6 +60,7 @@ function keys<T>(o: T): Array<keyof T> {
             const needTime: number = creep.needTime;
             const remainingTime: number = creep.remainingTime;
             const creepSpawn: StructureSpawn = creep.spawn;
+            const directions: DirectionConstant[] | undefined = creep.directions;
 
             const cancelStatus: OK | ERR_NOT_OWNER = creep.cancel();
             const setDirectionStatus: OK | ERR_NOT_OWNER | ERR_INVALID_ARGS = creep.setDirections([TOP, BOTTOM, LEFT, RIGHT]);
