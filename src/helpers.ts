@@ -59,9 +59,8 @@ interface CPU {
      * Allocate CPU limits to different shards. Total amount of CPU should remain equal to `Game.cpu.shardLimits`.
      * This method can be used only once per 12 hours.
      *
-     * @param {CPUShardLimits} limits An object with CPU values for each shard in the same format as `Game.cpu.shardLimits`.
-     * @returns {(OK | ERR_BUSY | ERR_INVALID_ARGS)} One of the following codes: `OK | ERR_BUSY | ERR_INVALID_ARGS`
-     * @memberof CPU
+     * @param limits An object with CPU values for each shard in the same format as `Game.cpu.shardLimits`.
+     * @returns One of the following codes: `OK | ERR_BUSY | ERR_INVALID_ARGS`
      */
     setShardLimits(limits: CPUShardLimits): OK | ERR_BUSY | ERR_INVALID_ARGS;
 
@@ -277,6 +276,16 @@ interface FindPathOpts {
      * Path to within (range) tiles of target tile. The default is to path to the tile that the target is on (0).
      */
     range?: number;
+
+    /**
+     * Cost for walking on plain positions. The default is 1.
+     */
+    plainCost?: number;
+
+    /**
+     * Cost for walking on swamp positions. The default is 5.
+     */
+    swampCost?: number;
 }
 
 interface MoveToOpts extends FindPathOpts {
@@ -337,6 +346,6 @@ interface _Constructor<T> {
 }
 
 interface _ConstructorById<T> extends _Constructor<T> {
-    new (id: string): T;
+    new(id: string): T;
     (id: string): T;
 }
