@@ -588,20 +588,7 @@ function keys<T>(o: T): Array<keyof T> {
 
     REACTIONS[Object.keys(creep.carry)[0]];
 
-    // Test signature of BOOSTS
-    const lab = creep.pos.findClosestByRange(FIND_STRUCTURES, {filter: (s) => s.structureType === STRUCTURE_LAB});
-    const resources = BOOSTS[creep.body[0].type];
-    for (const resourceKey in resources) {
-        const resourceType = resourceKey as ResourceConstant;
-        const actions = resources[resourceType];
-        for (const action in actions) {
-            const boostValue = actions[action];
-            const amount = Math.ceil(10 / boostValue);
-            if (lab !== null) {
-                creep.transfer(lab, resourceType, amount);
-            }
-        }
-    }
+    BOOSTS[creep.body[0].type];
 }
 
 {
