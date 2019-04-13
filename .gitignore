@@ -8,3 +8,4 @@ dist/screeps.ts
 dist/screeps.js
 dist/screeps-tests.js
 .vscode/tasks.json
+*.iml
